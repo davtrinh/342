@@ -1,0 +1,40 @@
+List<T>& List<T>::operator=(const List<T>& right) {
+
+    if (&right != this) {
+
+		
+        makeEmpty();
+        head = NULL;
+        if (right.head == NULL) {
+            return *this;
+		}
+
+        head = new Node();
+
+        Node* oPtr = right.head;
+        Node* lastPtr = head;
+
+	    T* dataPtr = new T();
+	    *dataPtr = *oPtr->data;
+
+	    lastPtr->data = dataPtr; // used to be head->data
+        lastPtr->next = NULL;
+	    
+	    while (oPtr->next != NULL) {
+            lastPtr->next = oPtr->next;
+
+
+		    oPtr = oPtr->next;
+		    T* nestedDataPtr = new T();
+		    *nestedDataPtr = *oPtr->data;
+		    Node* newNodePtr = new Node();
+		    newNodePtr->data = nestedDataPtr;
+		    lastPtr->next = newNodePtr;
+		    lastPtr = lastPtr->next;
+	    }
+	    lastPtr = NULL;
+    }
+
+
+    return *this;
+}
